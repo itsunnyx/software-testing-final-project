@@ -1,0 +1,236 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║         PLAYWRIGHT TEST AUTOMATION - PAGE OBJECT MODEL STRUCTURE            ║
+║                    Software Testing Final Project                           ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+📂 PROJECT STRUCTURE
+═══════════════════════════════════════════════════════════════════════════════
+
+tests/
+│
+├── 📁 pages/                          [PAGE OBJECTS - Business Logic]
+│   ├── basePage.ts                   ┌─ Base class with common methods
+│   ├── loginPage.ts                  ├─ Login functionality
+│   ├── dashboardPage.ts              ├─ Dashboard navigation (4 methods)
+│   ├── statisticsPage.ts             ├─ Statistics reports (7 methods)
+│   └── examStatusPage.ts             └─ Exam status management (12 methods)
+│
+├── 📁 specs/                          [TEST CASES]
+│   └── reports.spec.ts               └─ 5 test cases with beforeEach hook
+│
+├── 📁 fixtures/                       [TEST DATA]
+│   └── testData.ts                   └─ Constants, credentials, messages
+│
+└── 📁 (utils, data)                   [EXISTING UTILITIES]
+    ├── data/                         ├─ Test case definitions
+    └── utils/                        └─ Helper utilities
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 TEST CASES IMPLEMENTED
+═══════════════════════════════════════════════════════════════════════════════
+
+[1] TCS-RDM-001  │ Display Paper Usage Statistics Report
+    └─ Steps: Navigate → Click Tab → Verify Chart & Table
+
+[2] TCS-RDM-002  │ Filter Statistics by Year & Semester  
+    └─ Steps: Navigate → Apply Filter (2568/1) → Verify Update
+
+[3] TCS-RDM-004  │ Display Exam Status Report
+    └─ Steps: Navigate → Verify Table Visible → Count Subjects
+
+[4] TCS-RDM-005  │ Update Exam Status to "Sent"
+    └─ Steps: Navigate → Search (CPEN101) → Update → Save → Verify
+
+[5] TCS-RDM-010  │ Generate Pie Chart for Status Summary
+    └─ Steps: Navigate → Click Generate Chart → Verify Display
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📦 PAGE OBJECT CLASSES
+═══════════════════════════════════════════════════════════════════════════════
+
+┌─ BasePage (Abstract Base Class)
+│  ├─ goto()
+│  ├─ click()
+│  ├─ fill()
+│  ├─ getText()
+│  ├─ isVisible()
+│  ├─ waitForSelector()
+│  ├─ selectOption()
+│  ├─ getInputValue()
+│  ├─ reload()
+│  ├─ waitForLoadState()
+│  ├─ expectElementVisible()
+│  ├─ expectTextInPage()
+│  ├─ expectTextInElement()
+│  ├─ screenshot()
+│  └─ getCurrentUrl()
+
+┌─ LoginPage (extends BasePage)
+│  ├─ goto()
+│  ├─ login(username, password)
+│  ├─ getErrorMessage()
+│  └─ isErrorDisplayed()
+
+┌─ DashboardPage (extends BasePage)
+│  ├─ navigateToPaperUsageReport()
+│  ├─ navigateToExamStatusReport()
+│  ├─ navigateToInvigilationReport()
+│  ├─ navigateToActivityLog()
+│  └─ logout()
+
+┌─ StatisticsPage (extends BasePage)
+│  ├─ clickTabPaperUsage()
+│  ├─ clickTabExamSubmission()
+│  ├─ filterByYearAndSemester(year, semester)
+│  ├─ isChartVisible()
+│  ├─ isTableVisible()
+│  ├─ isNoDataMessageDisplayed()
+│  └─ getDepartmentCount()
+
+┌─ ExamStatusPage (extends BasePage)
+│  ├─ searchSubject(subjectCode)
+│  ├─ findSubjectRow(subjectCode)
+│  ├─ updateSubjectStatus(rowIndex, status)
+│  ├─ updateSubjectStatusByCode(subjectCode, status)
+│  ├─ clickSave()
+│  ├─ isSuccessMessageDisplayed()
+│  ├─ getSuccessMessage()
+│  ├─ isConfirmModalDisplayed()
+│  ├─ confirmWarning()
+│  ├─ clickGenerateChart()
+│  ├─ isPieChartDisplayed()
+│  └─ getSubjectCount()
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📊 TEST DATA ORGANIZATION (testData.ts)
+═══════════════════════════════════════════════════════════════════════════════
+
+TEST_DATA
+├── admin: { username: 'admin01', password: 'password123' }
+├── academicYear: { current: '2568', future: '2569' }
+├── semester: { first: '1', second: '2' }
+├── subjects: { CPEN101, CPEN102, CPEN103, ... CPEN109 }
+├── examStatus: { sent, notSent, noExam }
+├── departments: [ภาควิชาวิทยาศาสตร์, ...]
+├── filterOptions: { semester1Year2568, semester2Year2569, ... }
+├── messages: { noDataAvailable, saveSuccess, ... }
+├── invigilators: { existingTeacher, noInvigilationTeacher }
+├── examInfo: { roomNumber, pages, sets, remarks }
+└── invalidData: { invalidDateFormat, validDateFormat }
+
+TIMEOUT_VALUES
+├── short: 3000ms
+├── medium: 5000ms
+└── long: 10000ms
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🔄 TEST EXECUTION FLOW
+═══════════════════════════════════════════════════════════════════════════════
+
+1. SETUP (beforeEach)
+   │
+   ├─ Initialize Page Objects
+   │  ├─ LoginPage
+   │  ├─ DashboardPage
+   │  ├─ StatisticsPage
+   │  └─ ExamStatusPage
+   │
+   └─ Authenticate
+      ├─ Navigate to login
+      └─ Login with admin credentials
+
+2. TEST EXECUTION
+   │
+   ├─ Navigate to feature
+   ├─ Perform actions (click, fill, select)
+   ├─ Wait for elements
+   ├─ Assert expectations
+   └─ Log results to console
+
+3. CLEANUP (implicit in Playwright)
+   │
+   └─ Browser cleanup and report generation
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🚀 RUNNING TESTS
+═══════════════════════════════════════════════════════════════════════════════
+
+# Run all tests
+npm test
+
+# Run tests with UI mode (visual debugging)
+npm run test:ui
+
+# Run tests in headed mode (visible browser)
+npm run test:headed
+
+# Run specific test file
+npx playwright test tests/specs/reports.spec.ts
+
+# Run tests matching pattern
+npx playwright test --grep "[TCS-RDM-001]"
+
+# View HTML report
+npm run report
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✨ KEY FEATURES
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ Page Object Model Pattern
+   └─ Separation of test logic from UI interaction
+
+✅ Type-Safe TypeScript
+   └─ Strict mode enabled with full type safety
+
+✅ Reusable Page Objects
+   └─ 42+ methods shared across tests
+
+✅ Centralized Test Data
+   └─ Single source of truth for constants
+
+✅ Clear Assertions
+   └─ Easy to read expectations
+
+✅ Proper Wait States
+   └─ Handles asynchronous operations
+
+✅ Multi-Browser Support
+   └─ Chrome, Firefox, Safari
+
+✅ HTML Reporting
+   └─ Visual test results with screenshots
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📈 STATISTICS
+═══════════════════════════════════════════════════════════════════════════════
+
+Files Created:        5 page objects + 1 test file + 1 data file = 7 files
+Total Methods:        42+ reusable methods
+Test Cases:           5 complete test cases
+Lines of Code:        ~2,000+ lines
+Test Coverage:        Critical report features (statistics, exam status)
+TypeScript:           100% type-safe
+CSS Selectors:        Flexible, multi-pattern matching
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📝 NOTES
+═══════════════════════════════════════════════════════════════════════════════
+
+• All selectors support multiple element patterns (attribute-based, class-based)
+• Thai language support throughout tests and test data
+• Error handling for missing or hidden elements
+• Console logging for debugging and test tracking
+• beforeEach hook ensures fresh login state for each test
+• Tests are independent and can run in any order
+• Proper wait handling for dynamic content loading
+
+═══════════════════════════════════════════════════════════════════════════════
