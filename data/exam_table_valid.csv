@@ -1,0 +1,11 @@
+รหัสวิชา,ชื่อวิชา,วันที่สอบ,เวลาเริ่ม,เวลาสิ้นสุด,ห้องสอบ,จำนวนนักศึกษา
+SC101,Introduction to Computer Science,2024-08-31,09:00,12:00,SC301,45
+SC102,Data Structures,2024-09-01,10:00,13:00,SC302,38
+SC103,Database Design,2024-09-02,14:00,17:00,SC303,52
+SC104,Web Development,2024-09-03,09:00,12:00,SC304,41
+SC105,Software Engineering,2024-09-04,13:00,16:00,SC305,35
+CS201,Algorithms,2024-09-05,10:00,13:00,SC306,48
+CS202,Operating Systems,2024-09-06,09:00,12:00,SC307,42
+CS203,Computer Networks,2024-09-07,14:00,17:00,SC308,39
+CS204,Cybersecurity,2024-09-08,10:00,13:00,SC309,36
+CS205,Artificial Intelligence,2024-09-09,13:00,16:00,SC310,44

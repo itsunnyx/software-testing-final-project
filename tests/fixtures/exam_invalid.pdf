@@ -1,0 +1,4 @@
+This is an invalid PDF file for testing file format validation.
+
+Do not use this for actual data import testing.
+It should only be used to verify the system rejects non-Excel/CSV files.
